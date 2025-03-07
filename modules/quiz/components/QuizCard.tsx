@@ -5,42 +5,33 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button";
-import { SquarePen, Trash2 } from "lucide-react";
+import { EllipsisVertical, ListChecks, SquarePen, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export const QuizCard = ({quiz}:QuizCardInterface) => {
+export const QuizCard = ({quiz ,onDelete}:QuizCardInterface) => {
 
 
     const quizDate = new Date(quiz.created_at).toDateString()
     return (  
         <Link href={`quiz/${quiz.id}`}>
-            <div className="rounded-lg border  shadow-md gap-2 bg-white hover:scale-105">
+            <div className="rounded-lg border  shadow-md gap-2 bg-white">
                 <img 
-                src={`${quiz.category}.webp`} 
+                src={`quiz-img/${quiz.category}.webp`} 
                 alt={`${quiz.category} Category Image`} 
                 className="w-full object-cover rounded-t-lg"
                 />
                 <div className="px-2 my-2">
                     <div className="flex flex-row items-center justify-between">
-                        <p className="truncate mt-2 font-semibold">{quiz.title}</p> 
-                        <svg className="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M12 10h.01M12 14h.01M12 18h.01"/>
-                        </svg>
+                        <p className="truncate mr-2 font-semibold">{quiz.title}</p> 
+                        <SettingsDropDown id={quiz.id} onDelete={onDelete}/>
                     </div>
                     <div className="flex flex-row gap-1 mt-1 items-center">
                         <DifficultyText difficulty={quiz.difficulty}></DifficultyText>
                         <CategoryText category={quiz.category}></CategoryText>
                         <p>•</p>
-                        <p className="text-xs opacity-75">10 Questions</p>
+                        <p className="text-xs opacity-75">{quiz.question_count} Questions</p>
                     </div>
                     <div className="flex flex-row justify-between items-end mt-2">
                         <p className="opacity-75 text-xs">By John Doe</p>
@@ -50,7 +41,6 @@ export const QuizCard = ({quiz}:QuizCardInterface) => {
                     </div>
                 </div>
             </div>
-            <SettingsDropDown id={quiz.id}></SettingsDropDown>
         </Link>
     );
 }
@@ -87,25 +77,55 @@ export const CategoryText = ({category, size="xs"}:CategoryTextInterface) => {
     )
 }
 
-export const SettingsDropDown = ({id}:SettingsDropDownInterface) => {
+export const SettingsDropDown = ({id, onDelete}:SettingsDropDownInterface) => {
+    const router = useRouter()
+    const stopPropagation = (e:React.MouseEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
+        e.nativeEvent.stopImmediatePropagation()
+    }
 
+    const onEdit = () => {
+        router.push(`/quiz/${id}/edit`)
+    }
+
+    const onQuestions = () => {
+        router.push(`/quiz/${id}/questions`)
+    }
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="w-min">
-                    <svg className="w-8 h-8 text-gray-800 z-50" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M12 10h.01M12 14h.01M12 18h.01"/>
-                    </svg>
+            <DropdownMenuTrigger asChild
+            className="w-min"
+            onClick={(e) => {
+                stopPropagation(e)
+            }}
+            >
+                <EllipsisVertical   style={{opacity:0.75}} className="px-2 py-2 !min-w-8 !min-h-8"/>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-full rounded px- bg-slate-50 my-3 font-semibold" loop>
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem 
+                    onClick={(e) => {
+                        stopPropagation(e)
+                        onQuestions()
+                    }}>
+                        <ListChecks />
+                        Edit Questions
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                    onClick={(e) => {
+                        stopPropagation(e)
+                        onEdit()
+                    }}>
                         <SquarePen />
                         Edit Quiz
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                     className="text-[#e76460] hover:text-[#e76460] !important"
-                    onClick={async () => {
-
+                    onClick={async (e) => {
+                        console.log("delete")
+                        stopPropagation(e)
+                        await onDelete(id)
                     }}
                     >
                         <Trash2 color="#e76460" />

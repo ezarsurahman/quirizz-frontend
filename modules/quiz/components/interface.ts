@@ -1,4 +1,5 @@
 import exp from "constants"
+import { DateRange } from "react-day-picker"
 
 export interface Quiz {
     id: string,
@@ -10,11 +11,13 @@ export interface Quiz {
 }
 
 export interface QuizCardInterface {
-    quiz: Quiz
+    quiz: any,
+    onDelete: (id:string) => void
 }
 
 export interface QuizTileInterface {
-    quizzes: Quiz[]
+    quizzes: any[],
+    onDelete: (id:string) => void
 }
 
 export interface DifficultyTextInterface {
@@ -28,4 +31,14 @@ export interface CategoryTextInterface {
 
 export interface SettingsDropDownInterface {
     id: string,
+    onDelete: (id:string) => void,
+}
+
+export interface SearchAndFilterInterface {
+    onChange: (
+        search:string,
+        category:string,
+        difficulty:string,
+        date:DateRange | undefined,
+    ) => void,
 }

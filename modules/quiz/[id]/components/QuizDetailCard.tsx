@@ -1,12 +1,20 @@
 import { DropdownMenu, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { CategoryText, DifficultyText, SettingsDropDown } from "../../components/QuizCard";
 import { QuizDetailCardInteface } from "./interface";
+import { useRouter } from "next/navigation";
 
-export const QuizDetailCard = ({quiz}:QuizDetailCardInteface) => {
+export const QuizDetailCard = ({quiz, onDelete}:QuizDetailCardInteface) => {
+    const router = useRouter()
     return (
-        <div className="flex flex-col w-[60vw] rounded-lg shadow-md border mx-16 mb-4 bg-slate-100">
+        <div className="flex flex-col w-[60vw] rounded-lg shadow-md border mx-16 mb-4 bg-slate-100 relative">
+            <div className="bg-white absolute rounded-lg top-3 right-3 z-20 cursor-pointer">
+                <SettingsDropDown id={quiz.id} onDelete={(id:string) =>{
+                    onDelete(id)
+                    router.push("/quiz")
+                }}/>
+            </div>
             <img 
-            src={`../${quiz.category}.webp`} 
+            src={`../quiz-img/${quiz.category}.webp`} 
             alt="" 
             className="rounded-t-lg object-cover h-80"
             />

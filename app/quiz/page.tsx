@@ -1,3 +1,3 @@
-import { Quiz } from "@/modules/quiz";
+import { QuizHome } from "@/modules/quiz";
 
-export default Quiz
+export default QuizHome
