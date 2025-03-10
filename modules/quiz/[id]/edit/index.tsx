@@ -14,12 +14,13 @@ export const EditQuiz = () => {
 
   useEffect(() => {
       const fetchQuiz = async () => {
-      const response = await axiosInstance.get(`http://127.0.0.1:8000/api/quiz/${id}`)
+      const response = await axiosInstance.get(`/api/quiz/${id}/`)
       const data = response.data
       setQuiz(data.data)
       setIsLoading(false)
       }
       try {
+        console.log(id)
         fetchQuiz()
       } catch(error) {
         toast.error("An error occurred")

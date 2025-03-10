@@ -40,12 +40,6 @@ export const QuizDetailCard = ({quiz, onDelete}:QuizDetailCardInteface) => {
                 <div className="flex flex-col md:flex-row gap-2 mt-1">
                     <div className="flex flex-row gap-2">
                         <svg className="w-6 h-6 text-gray-800 opacity-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" strokeWidth="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                        </svg>
-                        <p className="mr-5">John Doe</p>
-                    </div>
-                    <div className="flex flex-row gap-2">
-                        <svg className="w-6 h-6 text-gray-800 opacity-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 10h16M8 14h8m-4-7V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"/>
                         </svg>
                         <p className="mr-5">{new Date(quiz.created_at).toDateString()}</p>

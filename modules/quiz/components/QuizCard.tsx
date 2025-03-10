@@ -37,8 +37,7 @@ export const QuizCard = ({quiz ,onDelete}:QuizCardInterface) => {
                         <p>•</p>
                         <p className="text-xs opacity-75">{quiz.question_count} Questions</p>
                     </div>
-                    <div className="flex flex-row justify-between items-end mt-2">
-                        <p className="opacity-75 text-xs">By John Doe</p>
+                    <div className="flex flex-row justify-end items-end mt-2">
                         <p className="opacity-50 text-xs">
                             {quizDate}
                         </p>
