@@ -29,11 +29,11 @@ cd quirizz-frontend
 ### Install all dependencies
 Using npm:
 ```
-npm install
+npm install --legacy-peer-deps
 ```
 Using yarn:
 ```
-yarn install
+yarn install --skip-integrity-check
 ```
 ### Run the application
 Using npm:
