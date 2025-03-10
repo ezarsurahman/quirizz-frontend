@@ -20,7 +20,7 @@ Quick guide on how to get started with this project.
 
 ### Clone the repository
 ```bash
-git clone https://github.com/your-username/quirizz-frontend.git
+git clone https://github.com/ezarsurahman/quirizz-frontend.git
 ```
 ### Move into the directory
 ```bash
