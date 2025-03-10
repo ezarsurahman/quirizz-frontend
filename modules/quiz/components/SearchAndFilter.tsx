@@ -31,24 +31,27 @@ export const SearchAndFilter = ({onChange}:SearchAndFilterInterface) => {
     },[searchKeyword,selectedCategory,selectedDifficulty,date])
 
     return (  
-        <div className="flex flex-row mb-3 justify-between items-center w-full gap-3">
+        <div className="flex flex-col lg:flex-row mb-3 justify-between items-center w-full gap-3">
             <Input 
             placeholder="Search a keyword" 
             onChange={handleSearchChange}
             className="focus-visible:ring-mainpink flex-2"/>
-            <InputDropdown 
-            options={categories} 
-            title="Category" 
-            onChange={handleCategoryChange}
-            className="font-semibold flex-1"/>
-            <InputDropdown 
-            options={difficulties} 
-            title="Difficulty" 
-            onChange={handleDifficultyChange}
-            className="font-semibold flex-1"/>
+            <div className="flex flex-row gap-3 w-full">
+                <InputDropdown 
+                options={categories} 
+                title="Category" 
+                onChange={handleCategoryChange}
+                className="font-semibold flex-1"/>
+                <InputDropdown 
+                options={difficulties} 
+                title="Difficulty" 
+                onChange={handleDifficultyChange}
+                className="font-semibold flex-1"/>
+            </div>
             <DatePickerWithRange
             date={date}
             setDate={setDate}
+            className="w-full"
             />
         </div>
     );

@@ -10,6 +10,7 @@ import DOMPurify from "dompurify";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { EditQuizFormInterface } from "./interface";
+import { axiosInstance } from "@/lib/utils";
 
 const schema = z.object({
     title: z.string().min(1, "Title is required"),
@@ -41,14 +42,8 @@ export const EditQuizForm = ({quiz}:EditQuizFormInterface) => {
       category: DOMPurify.sanitize(category),
       difficulty: DOMPurify.sanitize(difficulty),
     }
-    const response = await fetch(`http://127.0.0.1:8000/api/quiz/${quiz.id}/`, {
-      method:"PUT",
-      headers: {
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify(sanitizedInput)
-    })
-    const result = await response.json()
+    const response = await axiosInstance.put(`/api/quiz/${quiz.id}/`,sanitizedInput)
+    const result = response.data
     if(result.status == "success") {
       toast.success("Quiz saved")
       router.push("/quiz")
@@ -81,7 +76,7 @@ export const EditQuizForm = ({quiz}:EditQuizFormInterface) => {
       />
       {errors.description && <p className="text-red-500">{errors.description.message}</p>}
 
-      <div className="w-full flex flex-row gap-2">
+      <div className="w-full flex flex-col md:flex-row gap-2">
         <div className="flex flex-col gap-1 w-full">
           <label>Category</label>
           <Controller

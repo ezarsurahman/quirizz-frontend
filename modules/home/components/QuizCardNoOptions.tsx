@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CategoryTextInterface, DifficultyTextInterface, QuizCardInterface, SettingsDropDownInterface } from "./interface";
+import { CategoryTextInterface, DifficultyTextInterface,QuizCardNoOptionsInterface, SettingsDropDownInterface } from "./interface";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -7,29 +7,25 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { EllipsisVertical, ListChecks, SquarePen, Trash2 } from "lucide-react";
+import { EllipsisVertical, ListChecks, Router, SquarePen, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
-export const QuizCard = ({quiz ,onDelete}:QuizCardInterface) => {
+export const QuizCardNoOptions = ({quiz}:QuizCardNoOptionsInterface) => {
 
+    const router = useRouter()
 
     const quizDate = new Date(quiz.created_at).toDateString()
     return (  
-        <Link href={`quiz/${quiz.id}`}>
-            <div className="rounded-lg border  shadow-md gap-2 bg-white">
-                <Image 
-                src={`/quiz-img/${quiz.category}.webp`} 
-                width={500}
-                height={500}
-                loading="lazy"
+        <button onClick={() => router.push(`quiz/${quiz.id}`)} className="">
+            <div className="rounded-lg border  shadow-md gap-2 bg-white ">
+                <img 
+                src={`quiz-img/${quiz.category}.webp`} 
                 alt={`${quiz.category} Category Image`} 
                 className="w-full object-cover rounded-t-lg"
                 />
                 <div className="px-2 my-2">
                     <div className="flex flex-row items-center justify-between">
                         <p className="truncate mr-2 font-semibold">{quiz.title}</p> 
-                        <SettingsDropDown id={quiz.id} onDelete={onDelete}/>
                     </div>
                     <div className="flex flex-row gap-1 mt-1 items-center">
                         <DifficultyText difficulty={quiz.difficulty}></DifficultyText>
@@ -45,7 +41,7 @@ export const QuizCard = ({quiz ,onDelete}:QuizCardInterface) => {
                     </div>
                 </div>
             </div>
-        </Link>
+        </button>
     );
 }
 

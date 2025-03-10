@@ -2,6 +2,8 @@
 import { useParams } from "next/navigation";
 import { EditQuizForm } from "./EditQuizForm";
 import { useEffect, useState } from "react";
+import { axiosInstance } from "@/lib/utils";
+import { toast } from "sonner";
 
 export const EditQuiz = () => {
   const params = useParams()
@@ -12,12 +14,16 @@ export const EditQuiz = () => {
 
   useEffect(() => {
       const fetchQuiz = async () => {
-      const response = await fetch(`http://127.0.0.1:8000/api/quiz/${id}`)
-      const data = await response.json()
+      const response = await axiosInstance.get(`http://127.0.0.1:8000/api/quiz/${id}`)
+      const data = response.data
       setQuiz(data.data)
       setIsLoading(false)
       }
-      fetchQuiz()
+      try {
+        fetchQuiz()
+      } catch(error) {
+        toast.error("An error occurred")
+      }
   },[])
 
 
@@ -27,7 +33,7 @@ export const EditQuiz = () => {
             <p className="text-4xl">Loading...</p>
           ) : (
             <div 
-            className="w-[60vw] px-4 py-4 flex flex-col gap-1 bg-white rounded shadow-md">
+            className="w-[90vw] px-4 py-4 flex flex-col gap-1 bg-white rounded shadow-md">
                 <p className="font-semibold text-2xl text-mainpink">Edit Quiz</p>
                 {quiz && <EditQuizForm quiz={quiz}/>}
             </div>  

@@ -12,6 +12,7 @@ import DOMPurify from "dompurify";
 import { stringify } from "querystring";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/lib/utils";
 
 const schema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -41,20 +42,13 @@ export const CreateQuizForm = () => {
       category: DOMPurify.sanitize(category),
       difficulty: DOMPurify.sanitize(difficulty),
     }
-    const response = await fetch("http://127.0.0.1:8000/api/quiz/", {
-      method:"POST",
-      headers: {
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify(sanitizedInput)
-    })
-    const result = await response.json()
-    if(result.status == "success") {
+    const response = await axiosInstance.post("/api/quiz/", data=sanitizedInput)
+    if(response.data.status == "success") {
       toast.success("Quiz created succesfully")
       router.push("/quiz")
     } else {
-      if(result.message == "Quiz title already exists") {
-        toast.error(result.message)
+      if(response.data.message == "Quiz title already exists") {
+        toast.error(response.data.message)
       }
     }
   };
@@ -81,7 +75,7 @@ export const CreateQuizForm = () => {
       />
       {errors.description && <p className="text-red-500">{errors.description.message}</p>}
 
-      <div className="w-full flex flex-row gap-2">
+      <div className="w-full flex flex-col md:flex-row gap-2">
         <div className="flex flex-col gap-1 w-full">
           <label>Category</label>
           <Controller

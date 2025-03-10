@@ -14,6 +14,9 @@ import { SearchAndFilter } from "./components/SearchAndFilter"
 import { DateRange } from "react-day-picker"
 import { object } from "zod"
 import { formatISO9075 } from "date-fns"
+import { axiosInstance } from "@/lib/utils"
+
+
 
 
 export const QuizHome = () => {
@@ -21,15 +24,8 @@ export const QuizHome = () => {
     const [isLoading, setIsLoading] = useState(true)
     async function fetchQuiz() {
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/quiz/", {
-            method: "GET",
-            headers: {
-                'Content-Type' : "application/json"
-            }
-            })
-
-            const data = await response.json()
-            return data
+            const data = await axiosInstance.get("/api/quiz/")
+            return data.data
         } catch(err) {
             console.log(err)
         }
@@ -42,23 +38,19 @@ export const QuizHome = () => {
         }
     }
     useEffect( () => {
-
         getQuizzes()
         setIsLoading(false)
     },[])
 
     const deleteQuiz = async (id:string) => {
-        const response = await fetch(`http://127.0.0.1:8000/api/quiz/${id}/`,{
-            method: "DELETE"
-        })
-        const data = await response.json()
-        if(data.status === "success") {
+        const data = await axiosInstance.delete(`/api/quiz/${id}/`)
+        console.log(data)
+        if(data.data.status === "success") {
             let quizCopy = quizzes.filter((quiz:Quiz) => {return quiz.id !== id})
             setQuizzes(quizCopy)
-            // await getQuizzes()
             toast.success("Quiz deleted succesfully")
         } else {
-            toast.error(data.message)
+            toast.error(data.data.message)
         }
     }
 
@@ -69,7 +61,7 @@ export const QuizHome = () => {
         date: DateRange | undefined
     ) => {
         let params : {[key:string]: string} = {}
-        let url = "http://127.0.0.1:8000/api/quiz/?"
+        let url = "/api/quiz/?"
         if(search !== "") {
             params.search = search;
         }
@@ -85,21 +77,15 @@ export const QuizHome = () => {
             params["date_from"] = date_from;
             params["date_to"] = date_to;
         }
-        const response = await fetch(url + new URLSearchParams(params).toString(),{
-            method:"GET",
-            headers : {
-                "Content-Type":"application/json"
-            }
-        })
-        const data = await response.json()
-        setQuizzes(data.data.quizzes)
+        const response = await axiosInstance.get(url + new URLSearchParams(params).toString())
+        setQuizzes(response.data.data.quizzes)
     }
 
     return (
         <div className="pt-24 py-5 relative bg-slate-50 flex items-center justify-center h-min-screen">
             <div className={`h-min-screen flex flex-col ${isLoading ? "justify-center" : "justify-start"} items-center z-10 relative w-[80vw]`}>
                 <div className="flex flex-row mb-3 justify-between items-center w-full">
-                    <p className="font-semibold text-4xl">All Quizzes</p>
+                    <p className="font-semibold text-2xl md:text-4xl">All Quizzes</p>
                     <Link href={"quiz/create"}>
                         <Button className="flex gap-1 bg-mainpink text-white font-semibold text-lg rounded-lg hover:bg-hoverpink" >
                                 <CirclePlus /> Create Quiz

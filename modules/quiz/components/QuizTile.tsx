@@ -1,5 +1,7 @@
+import dynamic from "next/dynamic";
 import { QuizTileInterface } from "./interface";
-import { QuizCard } from "./QuizCard";
+
+const QuizCard = dynamic(() => import("./QuizCard").then(mod => mod.QuizCard));
 
 export const QuizTile = ({quizzes, onDelete}:QuizTileInterface) => {
     
@@ -22,4 +24,4 @@ export const QuizTile = ({quizzes, onDelete}:QuizTileInterface) => {
         </div>
     );
 }
- 
+

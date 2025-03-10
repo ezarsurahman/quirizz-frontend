@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { RadioGroups } from "./RadioButton";
 import { Pencil } from "lucide-react";
 
-export const QuestionCard = ({num,question, editToggle}:QuestionCardInterface) => {
+export const QuestionCard = ({num,question, editToggle, submitted}:QuestionCardInterface) => {
     return (
         <div className="w-full rounded bg-white shadow-sm py-3 px-3">
             <div className="flex flex-row items-center justify-between">
@@ -11,7 +11,11 @@ export const QuestionCard = ({num,question, editToggle}:QuestionCardInterface) =
                     <QuestionCategoryChip type={question.type}/>
                 </div>
                 <button onClick={() => editToggle(question.id)}>
-                    <Pencil className="opacity-60 hover:opacity-90 text-mainpink"/>
+                    {!submitted ? (
+                        <Pencil className="opacity-60 hover:opacity-90 text-mainpink"/>
+                    ):(
+                        ""
+                    )}
                 </button>
             </div>
             <p className="font-semibold my-2">{question.problem}</p>

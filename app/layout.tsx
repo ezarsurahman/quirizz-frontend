@@ -4,7 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner"
-import Head from "next/head";
+import axios from "axios";
+
 
 
 const geistSans = Geist({

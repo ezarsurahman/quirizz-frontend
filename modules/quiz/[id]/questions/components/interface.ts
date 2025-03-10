@@ -18,12 +18,16 @@ interface QuestionListInterface {
     deleteQuestion: (id:string) => void
     updateQuestion: (id: string, question: any) => void
     createQuestion: (question: any) => void
+    editToggle: () => void
+    createMode: boolean
+    submitted:boolean
 }
 
 interface QuestionCardInterface {
     num: number
     question: Question
     editToggle: (id: string) => void
+    submitted:boolean
 }
 interface QuestionEditCardInterface {
     num: number
@@ -31,6 +35,7 @@ interface QuestionEditCardInterface {
     deleteQuestion: (id:string) => void
     updateQuestion: (id: string, question: any) => any
     editToggle: (id: string) => void
+    submitted: boolean
 }
 
 interface QuestionCreateCardInterface {

@@ -8,12 +8,10 @@ export interface Quiz {
     created_at: string,
     category: string,
     difficulty: string,
-    submitted:boolean
 }
 
-export interface QuizCardInterface {
+export interface QuizCardNoOptionsInterface {
     quiz: any,
-    onDelete: (id:string) => void
 }
 
 export interface QuizTileInterface {

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {Quiz} from "../components/interface"
 import { QuizDetailCard } from "./components/QuizDetailCard";
 import { toast } from "sonner";
+import { axiosInstance } from "@/lib/utils";
 
 export const QuizDetails = () => {
     const params = useParams()
@@ -13,22 +14,19 @@ export const QuizDetails = () => {
 
     const deleteQuiz = async (id:string) => {
         setIsLoading(true)
-        const response = await fetch(`http://127.0.0.1:8000/api/quiz/${id}/`,{
-            method: "DELETE"
-        })
-        const data = await response.json()
-        if(data.status === "success") {
+        const response = await axiosInstance.delete(`/api/quiz/${id}/`)
+        if(response.data.status === "success") {
             toast.success("Quiz deleted succesfully")
         } else {
-            toast.error(data.message)
+            toast.error(response.data.message)
         }
         setIsLoading(false)
     }
 
     useEffect(() => {
         const fetchQuiz = async () => {
-            const response = await fetch(`http://127.0.0.1:8000/api/quiz/${id}`)
-            const data = await response.json()
+            const response = await axiosInstance.get(`/api/quiz/${id}/`)
+            const data = response.data
             setQuiz(data.data)
             setIsLoading(false)
         }
@@ -36,11 +34,11 @@ export const QuizDetails = () => {
     },[])
 
     return ( 
-        <div className="pt-24 h-[95dvh] flex justify-center items-center bg-mainpink">
+        <div className="pt-24 min-h-[95dvh] flex justify-center items-center bg-mainpink">
             {isLoading ? (
-                <p>Loading...</p>
+                <p className="font-semibold text-4xl">Loading...</p>
             ) : quiz ? (
-                <QuizDetailCard onDelete={deleteQuiz} quiz={quiz}></QuizDetailCard>
+                <QuizDetailCard onDelete={deleteQuiz} quiz={quiz}/>
             ) : (
             <p></p>
             )

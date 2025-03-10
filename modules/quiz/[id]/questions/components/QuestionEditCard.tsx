@@ -11,7 +11,7 @@ import { CirclePlus, TrashIcon } from "lucide-react";
 import DOMPurify from "dompurify";
 
 
-export const QuestionEditCard = ({num, question, deleteQuestion ,updateQuestion, editToggle}:QuestionEditCardInterface) => {
+export const QuestionEditCard = ({num, question, deleteQuestion ,updateQuestion, editToggle, submitted}:QuestionEditCardInterface) => {
     const schema = z.object({
         type: z.string().min(1, "Type is required"),
         problem: z.string().min(1, "Description is required"),
@@ -42,6 +42,7 @@ export const QuestionEditCard = ({num, question, deleteQuestion ,updateQuestion,
 
     const onDeleteQuestion = () => {
         setIsLoading(true)
+        console.log(question.id)
         deleteQuestion(question.id)
         setIsLoading(false)
     }
