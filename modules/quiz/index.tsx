@@ -83,7 +83,7 @@ export const QuizHome = () => {
 
     return (
         <div className="pt-24 py-5 relative bg-slate-50 flex items-center justify-center h-min-screen">
-            <div className={`h-min-screen flex flex-col ${isLoading ? "justify-center" : "justify-start"} items-center z-10 relative w-[80vw]`}>
+            <div className={`min-h-screen flex flex-col ${isLoading ? "justify-center" : "justify-start"} items-center z-10 relative w-[80vw]`}>
                 <div className="flex flex-row mb-3 justify-between items-center w-full">
                     <p className="font-semibold text-2xl md:text-4xl">All Quizzes</p>
                     <Link href={"quiz/create"}>
