@@ -17,10 +17,10 @@ export const Navbar = () => {
                     href="/quiz"
                     text="Quiz"
                     ></LinkButtons>
-                    <LinkButtons 
+                    {/* <LinkButtons 
                     href="/myquiz"
                     text="My Quiz"
-                    ></LinkButtons>
+                    ></LinkButtons> */}
                 </div>
             </div>
             <div id="mobile">
