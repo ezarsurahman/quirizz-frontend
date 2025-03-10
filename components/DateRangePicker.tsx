@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { addDays, format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
 import { cn } from "@/lib/utils"
@@ -12,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { format } from "date-fns"
 
 interface DatePickerWithRangeInterface extends React.HTMLAttributes<HTMLDivElement> {
   date: DateRange | undefined

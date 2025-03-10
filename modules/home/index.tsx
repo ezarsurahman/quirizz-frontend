@@ -2,7 +2,6 @@
 import { CheckCheck, LibraryBig, NotebookPen, Palette } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-// import { QuizCardNoOptions } from "./components/QuizCardNoOptions";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/lib/utils";
 import dynamic from "next/dynamic";
@@ -36,13 +35,22 @@ export function Home() {
     },[])
 
     return(
-        <div className="mt-24 min-h-screen">
+        <div 
+            className="mt-24 min-h-screen">
             {!isLoading ? (
                 <>
-                <div className="bg-white h-[40vh] flex flex-col items-center justify-center px-10 py-10 shadow-sm">
-                    <p className="font-bold text-black text-4xl">Test Your Knowledge with Fun Quizzes</p>
-                    <p className="font-bold text-black opacity-50">Explore thousands of quizzes created by our community or create your own!</p>
-                    <div className="flex flex-row gap-2 mt-2">
+                <div 
+                    className="bg-white h-[40vh] flex flex-col items-center justify-center px-10 py-10 shadow-sm">
+                    <p  
+                        className="font-bold text-black text-4xl">
+                        Test Your Knowledge with Fun Quizzes
+                    </p>
+                    <p 
+                        className="font-bold text-black opacity-50">
+                        Explore thousands of quizzes created by our community or create your own!
+                    </p>
+                    <div 
+                        className="flex flex-row gap-2 mt-2">
                         <button
                             className="bg-mainpink text-white font-semibold py-2 px-3 rounded-md"
                             onClick={() => router.push("/quiz/create")}
@@ -57,8 +65,14 @@ export function Home() {
                         </button>
                     </div>
                 </div> 
-                <div className="bg-[#f9fafb] min-h-[30vh] flex flex-col px-10 py-5">
-                    <p className="font-semibold text-2xl">Quizizz Features</p>
+                <div 
+                    className="bg-[#f9fafb] min-h-[30vh] flex flex-col px-10 py-5"
+                >
+                    <p 
+                        className="font-semibold text-2xl"
+                    >
+                        Quizizz Features
+                    </p>
                     <div className="flex flex-col md:flex-row justify-center items-center mt-3 h-1/2 gap-3">
                         <div className="bg-white rounded-md px-2 py-2 shadow-md h-full flex flex-col justify-center">
                             <NotebookPen className="text-mainpink"/>
